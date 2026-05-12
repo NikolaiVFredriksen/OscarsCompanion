@@ -76,6 +76,10 @@ const Sidebar = ({ seen }) => {
                   style={{
                     fontSize: "13px",
                     color: isActive ? "#AB8BFF" : "white",
+                    fontWeight: isActive ? "600" : "400",
+                    opacity: isActive ? 1 : 0.5,
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
                   }}
                 >
                   {cat.category}

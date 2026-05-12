@@ -1,11 +1,14 @@
 import nominations from "../data/nominations.json";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Sidebar = ({ seen }) => {
   const [activeCategory, setActiveCategory] = useState(null);
+  const isScrollingTo = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isScrollingTo.current) return;
+
       const categoryIds = nominations.map((cat) =>
         cat.category.replace(/\s+/g, "-").toLowerCase(),
       );
@@ -52,11 +55,15 @@ const Sidebar = ({ seen }) => {
             <div
               key={cat.category}
               onClick={() => {
+                isScrollingTo.current = true;
+                setActiveCategory(categoryId);
                 document
                   .getElementById(categoryId)
                   ?.scrollIntoView({ behavior: "smooth" });
+                setTimeout(() => {
+                  isScrollingTo.current = false;
+                }, 1000);
               }}
-              style={{ cursor: "pointer" }}
             >
               <div
                 style={{

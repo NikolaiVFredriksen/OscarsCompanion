@@ -1,6 +1,29 @@
 import nominations from "../data/nominations.json";
+import { useState, useEffect } from "react";
 
 const Sidebar = ({ seen }) => {
+  const [activeCategory, setActiveCategory] = useState(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const categoryIds = nominations.map((cat) =>
+        cat.category.replace(/\s+/g, "-").toLowerCase(),
+      );
+
+      for (let i = categoryIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(categoryIds[i]);
+        if (el && el.getBoundingClientRect().top <= 150) {
+          setActiveCategory(categoryIds[i]);
+          return;
+        }
+      }
+      setActiveCategory(null);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="sidebar">
       <p
@@ -19,7 +42,9 @@ const Sidebar = ({ seen }) => {
           const seenCount = cat.nominees.filter((n) =>
             seen.some((k) => k.startsWith(`${n.tmdb_id}-`)),
           ).length;
+          const categoryId = cat.category.replace(/\s+/g, "-").toLowerCase();
           const total = cat.nominees.length;
+          const isActive = activeCategory === categoryId;
           const percentage = (seenCount / total) * 100;
           const isComplete = seenCount === total;
 
@@ -28,9 +53,7 @@ const Sidebar = ({ seen }) => {
               key={cat.category}
               onClick={() => {
                 document
-                  .getElementById(
-                    cat.category.replace(/\s+/g, "-").toLowerCase(),
-                  )
+                  .getElementById(categoryId)
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
               style={{ cursor: "pointer" }}
@@ -42,7 +65,12 @@ const Sidebar = ({ seen }) => {
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "13px", color: "white" }}>
+                <span
+                  style={{
+                    fontSize: "13px",
+                    color: isActive ? "#AB8BFF" : "white",
+                  }}
+                >
                   {cat.category}
                 </span>
                 <span

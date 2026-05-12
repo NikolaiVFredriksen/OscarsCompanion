@@ -9,6 +9,18 @@ const Sidebar = ({ seen }) => {
     const handleScroll = () => {
       if (isScrollingTo.current) return;
 
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
+
+      if (nearBottom) {
+        setActiveCategory(
+          nominations[nominations.length - 1].category
+            .replace(/\s+/g, "-")
+            .toLowerCase(),
+        );
+        return;
+      }
+
       const categoryIds = nominations.map((cat) =>
         cat.category.replace(/\s+/g, "-").toLowerCase(),
       );
@@ -32,7 +44,7 @@ const Sidebar = ({ seen }) => {
       <p
         style={{
           fontSize: "13px",
-          color: "#9ca4ab",
+          color: "white",
           marginBottom: "1rem",
           fontWeight: "500",
         }}

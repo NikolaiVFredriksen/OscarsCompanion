@@ -234,7 +234,8 @@ const App = () => {
                   alt="Google"
                   style={{ width: "14px", height: "14px" }}
                 />
-                Sign in with Google
+                <span className="hidden sm:inline">Sign in with Google</span>
+                <span className="sm:hidden">Sign in</span>
               </button>
             )}
           </nav>

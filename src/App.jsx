@@ -53,12 +53,12 @@ const App = () => {
       const updated = watchlist.filter((k) => !k.startsWith(`${tmdbId}-`));
       setWatchlist(updated);
       localStorage.setItem("watchlist", JSON.stringify(updated));
-      if (user) await removeWatchlist(user.$id, tmdbId);
+      if (user) await removeWatchlist(user.id, tmdbId);
     } else {
       const updated = [...watchlist, `${tmdbId}-`];
       setWatchlist(updated);
       localStorage.setItem("watchlist", JSON.stringify(updated));
-      if (user) await addWatchlist(user.$id, tmdbId);
+      if (user) await addWatchlist(user.id, tmdbId);
     }
   };
 
@@ -68,12 +68,12 @@ const App = () => {
       const updated = seen.filter((k) => !k.startsWith(`${tmdbId}-`));
       setSeen(updated);
       localStorage.setItem("seen", JSON.stringify(updated));
-      if (user) await removeSeen(user.$id, tmdbId);
+      if (user) await removeSeen(user.id, tmdbId);
     } else {
       const updated = [...seen, `${tmdbId}-`];
       setSeen(updated);
       localStorage.setItem("seen", JSON.stringify(updated));
-      if (user) await addSeen(user.$id, tmdbId);
+      if (user) await addSeen(user.id, tmdbId);
     }
   };
 
@@ -83,8 +83,8 @@ const App = () => {
       const currentUser = await getCurrentUser();
       setUser(currentUser);
       if (currentUser) {
-        const seenData = await getSeen(currentUser.$id);
-        const watchlistData = await getWatchlist(currentUser.$id);
+        const seenData = await getSeen(currentUser.id);
+        const watchlistData = await getWatchlist(currentUser.id);
         setSeen(seenData.map((id) => `${id}-`));
         setWatchlist(watchlistData.map((id) => `${id}-`));
       }

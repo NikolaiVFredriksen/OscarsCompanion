@@ -51,34 +51,37 @@ npm install
 
 Create a `.env` file in the root:
 
+```
 VITE_TMDB_API_KEY=your_tmdb_api_key
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 VITE_REDIRECT_URL=http://localhost:5173
+```
 
 ### Run Locally
 
+```bash
 npm run dev
+```
 
 ---
 
 ## Project Structure
 
+```
 src/
 ├── components/
-│ ├── Nominations.jsx
-│ ├── Sidebar.jsx
-│ ├── MovieCard.jsx
-│ ├── Footer.jsx
-│ └── BackToTop.jsx
+│   ├── Nominations.jsx
+│   ├── Sidebar.jsx
+│   ├── MovieCard.jsx
+│   ├── Footer.jsx
+│   └── BackToTop.jsx
 ├── data/
-│ └── nominations.json
+│   └── nominations.json
 ├── lib/
-│ └── supabase.js
-├── supabase.js
+│   └── supabase.js
 └── App.jsx
-
----
+```
 
 ## Author
 

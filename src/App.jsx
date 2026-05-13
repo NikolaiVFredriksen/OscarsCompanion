@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
-import { updateSearchCount } from "./appwrite";
-import { getTrendingMovies } from "./appwrite";
-import { loginWithGoogle, logout, getCurrentUser } from "./appwrite";
+import { loginWithGoogle, logout, getCurrentUser } from "./lib/supabase";
 import Nominations from "./components/Nominations";
 import nominations from "./data/nominations.json";
 import Footer from "./components/Footer";
@@ -18,7 +16,7 @@ import {
   getWatchlist,
   addWatchlist,
   removeWatchlist,
-} from "./appwrite";
+} from "./lib/supabase";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -121,11 +119,11 @@ const App = () => {
 
       if (query && data.results && data.results.length > 0) {
         try {
-          // Update search count in Appwrite with error handling
+          // Update search count in Supabase with error handling
           await updateSearchCount(query, data.results[0]);
-        } catch (appwriteError) {
-          console.error("Error updating search count:", appwriteError);
-          // Don't crash the app if Appwrite fails, just log the error
+        } catch (supabaseError) {
+          console.error("Error updating search count:", supabaseError);
+          // Don't crash the app if Supabase fails, just log the error
         }
       }
     } catch (error) {

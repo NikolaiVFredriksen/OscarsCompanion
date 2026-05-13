@@ -95,7 +95,18 @@ const StickyProgress = ({ seen }) => {
             const isComplete = seenInCat === total;
 
             return (
-              <div key={cat.category}>
+              <div
+                key={cat.category}
+                onClick={() => {
+                  document
+                    .getElementById(
+                      cat.category.replace(/\s+/g, "-").toLowerCase(),
+                    )
+                    ?.scrollIntoView({ behavior: "smooth" });
+                  setOpen(false);
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 <div
                   style={{
                     display: "flex",

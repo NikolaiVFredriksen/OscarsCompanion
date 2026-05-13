@@ -38,7 +38,7 @@ const StickyProgress = ({ seen }) => {
             background: "rgba(0,0,0,0.5)",
             zIndex: 40,
           }}
-          className="sm:hidden"
+          className="sticky-progress"
         />
       )}
 
@@ -58,7 +58,7 @@ const StickyProgress = ({ seen }) => {
           transition: "top 0.3s ease",
           zIndex: 50,
         }}
-        className="sm:hidden"
+        className="sticky-progress"
       >
         <div
           style={{
@@ -190,7 +190,7 @@ const StickyProgress = ({ seen }) => {
             zIndex: 51,
             cursor: "pointer",
           }}
-          className="sm:hidden"
+          className="sticky-progress"
         >
           <span style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)" }}>
             📊 Your progress

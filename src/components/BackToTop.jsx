@@ -5,7 +5,7 @@ const BackToTop = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 3000) {
+      if (window.scrollY > 1500) {
         setVisible(true);
       } else {
         setVisible(false);

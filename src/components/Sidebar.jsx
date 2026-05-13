@@ -1,12 +1,50 @@
 import nominations from "../data/nominations.json";
+import { useState, useEffect, useRef } from "react";
 
 const Sidebar = ({ seen }) => {
+  const [activeCategory, setActiveCategory] = useState(null);
+  const isScrollingTo = useRef(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isScrollingTo.current) return;
+
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
+
+      if (nearBottom) {
+        setActiveCategory(
+          nominations[nominations.length - 1].category
+            .replace(/\s+/g, "-")
+            .toLowerCase(),
+        );
+        return;
+      }
+
+      const categoryIds = nominations.map((cat) =>
+        cat.category.replace(/\s+/g, "-").toLowerCase(),
+      );
+
+      for (let i = categoryIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(categoryIds[i]);
+        if (el && el.getBoundingClientRect().top <= 150) {
+          setActiveCategory(categoryIds[i]);
+          return;
+        }
+      }
+      setActiveCategory(null);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="sidebar">
       <p
         style={{
           fontSize: "13px",
-          color: "#9ca4ab",
+          color: "white",
           marginBottom: "1rem",
           fontWeight: "500",
         }}
@@ -19,7 +57,9 @@ const Sidebar = ({ seen }) => {
           const seenCount = cat.nominees.filter((n) =>
             seen.some((k) => k.startsWith(`${n.tmdb_id}-`)),
           ).length;
+          const categoryId = cat.category.replace(/\s+/g, "-").toLowerCase();
           const total = cat.nominees.length;
+          const isActive = activeCategory === categoryId;
           const percentage = (seenCount / total) * 100;
           const isComplete = seenCount === total;
 
@@ -27,13 +67,15 @@ const Sidebar = ({ seen }) => {
             <div
               key={cat.category}
               onClick={() => {
+                isScrollingTo.current = true;
+                setActiveCategory(categoryId);
                 document
-                  .getElementById(
-                    cat.category.replace(/\s+/g, "-").toLowerCase(),
-                  )
+                  .getElementById(categoryId)
                   ?.scrollIntoView({ behavior: "smooth" });
+                setTimeout(() => {
+                  isScrollingTo.current = false;
+                }, 1000);
               }}
-              style={{ cursor: "pointer" }}
             >
               <div
                 style={{
@@ -42,7 +84,16 @@ const Sidebar = ({ seen }) => {
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "13px", color: "white" }}>
+                <span
+                  style={{
+                    fontSize: "13px",
+                    color: isActive ? "#AB8BFF" : "white",
+                    fontWeight: isActive ? "600" : "400",
+                    opacity: isActive ? 1 : 0.5,
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                  }}
+                >
                   {cat.category}
                 </span>
                 <span

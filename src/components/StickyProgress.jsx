@@ -7,10 +7,10 @@ const StickyProgress = ({ seen }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const el = document.getElementById("best-picture"); // første kategori-id
+      const el = document.querySelector(".nominations");
       if (el) {
         const rect = el.getBoundingClientRect();
-        setVisible(rect.top < window.innerHeight);
+        setVisible(rect.top < 0);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -49,7 +49,7 @@ const StickyProgress = ({ seen }) => {
           top: open ? "60px" : "-80%",
           left: 0,
           right: 0,
-          height: "50vh",
+          height: "80vh",
           background: "#0f0d23",
           borderBottom: "0.5px solid rgba(255,255,255,0.1)",
           borderRadius: "0 0 20px 20px",
@@ -171,8 +171,8 @@ const StickyProgress = ({ seen }) => {
             right: 0,
             background: "rgba(10,6,24,0.95)",
             backdropFilter: "blur(12px)",
-            borderBottom: "0.5px solid rgba(255,255,255,0.08)",
-            padding: "10px 16px",
+            borderBottom: "2px solid rgba(255,255,255,0.05)",
+            padding: "24px 20px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -181,11 +181,11 @@ const StickyProgress = ({ seen }) => {
           }}
           className="sm:hidden"
         >
-          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)" }}>
+          <span style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)" }}>
             📊 Your progress
           </span>
           <span
-            style={{ fontSize: "12px", fontWeight: "600", color: "#AB8BFF" }}
+            style={{ fontSize: "15px", fontWeight: "600", color: "#AB8BFF" }}
           >
             {seenCount}/{totalCount} seen ›
           </span>

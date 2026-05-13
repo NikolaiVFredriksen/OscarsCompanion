@@ -73,6 +73,7 @@ src/
 ├── components/
 │   ├── Nominations.jsx
 │   ├── Sidebar.jsx
+│   ├── StickyProgress.jsx
 │   ├── MovieCard.jsx
 │   ├── Footer.jsx
 │   └── BackToTop.jsx

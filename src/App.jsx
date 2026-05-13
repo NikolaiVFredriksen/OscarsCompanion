@@ -148,7 +148,7 @@ const App = () => {
         }}
       >
         <div
-          style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}
+          style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 16px" }}
         >
           <nav
             style={{

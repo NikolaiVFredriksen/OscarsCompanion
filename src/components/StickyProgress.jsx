@@ -46,7 +46,7 @@ const StickyProgress = ({ seen }) => {
       <div
         style={{
           position: "fixed",
-          top: open ? "60px" : "-80%",
+          top: open ? "60px" : "-100vh",
           left: 0,
           right: 0,
           height: "80vh",

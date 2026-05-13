@@ -176,6 +176,32 @@
     }
   }
 
+  @media (max-width: 640px) {
+    .nominations ul {
+      grid-template-columns: 1fr;
+    }
+
+    .movie-card {
+      flex-direction: row;
+      min-height: unset;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px;
+    }
+
+    .movie-card img {
+      width: 80px;
+      min-width: 80px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .movie-card .mt-4 {
+      margin-top: 0;
+      flex: 1;
+    }
+  }
+
   .card-actions {
     @apply flex gap-2 mt-3;
     & button {

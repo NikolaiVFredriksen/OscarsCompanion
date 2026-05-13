@@ -7,6 +7,7 @@ import Nominations from "./components/Nominations";
 import nominations from "./data/nominations.json";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import StickyProgress from "./components/StickyProgress";
 
 import Sidebar from "./components/Sidebar";
 import {
@@ -148,7 +149,7 @@ const App = () => {
         }}
       >
         <div
-          style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}
+          style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 16px" }}
         >
           <nav
             style={{
@@ -234,7 +235,8 @@ const App = () => {
                   alt="Google"
                   style={{ width: "14px", height: "14px" }}
                 />
-                Sign in with Google
+                <span className="hidden sm:inline">Sign in with Google</span>
+                <span className="sm:hidden">Sign in</span>
               </button>
             )}
           </nav>
@@ -426,6 +428,7 @@ const App = () => {
           </div>
         </div>
       </div>
+      <StickyProgress seen={seen} />
       <Footer />
       <BackToTop />
     </main>

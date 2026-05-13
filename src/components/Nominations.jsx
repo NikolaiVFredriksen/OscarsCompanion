@@ -169,7 +169,13 @@ const Nominations = ({
                             onClick={() => toggleSeen(nominee.tmdb_id)}
                             className={isSeen ? "active" : ""}
                           >
-                            👁 {isSeen ? "Seen" : "Unseen"}
+                            👁{" "}
+                            <span className="hidden sm:inline">
+                              {isSeen ? "Seen" : "Unseen"}
+                            </span>
+                            <span className="sm:hidden">
+                              {isSeen ? "Seen" : "Mark as seen"}
+                            </span>
                           </button>
                           <button
                             onClick={() => toggleWatchlist(nominee.tmdb_id)}

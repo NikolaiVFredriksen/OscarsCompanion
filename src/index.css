@@ -186,6 +186,7 @@
       min-height: unset;
       gap: 12px;
       align-items: flex-start;
+      padding: 10px;
     }
 
     .movie-card img {

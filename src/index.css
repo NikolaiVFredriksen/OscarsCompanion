@@ -236,10 +236,17 @@
 
 .sidebar-wrapper {
   @apply block;
-  position: relative;
+  position: sticky;
   top: 2rem;
-  padding-bottom: 5rem;
   height: fit-content;
+}
+
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    position: relative;
+    top: 0;
+    padding-bottom: 5rem;
+  }
 }
 
 @media (max-width: 768px) {

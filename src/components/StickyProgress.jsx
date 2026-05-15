@@ -28,7 +28,6 @@ const StickyProgress = ({ seen }) => {
 
   return (
     <>
-      {/* Overlay */}
       {open && (
         <div
           onClick={() => setOpen(false)}
@@ -42,136 +41,147 @@ const StickyProgress = ({ seen }) => {
         />
       )}
 
-      {/* Sheet */}
-      <div
-        style={{
-          position: "fixed",
-          top: open ? "60px" : "-100vh",
-          left: 0,
-          right: 0,
-          height: "80vh",
-          background: "#0f0d23",
-          borderBottom: "0.5px solid rgba(255,255,255,0.1)",
-          borderRadius: "0 0 20px 20px",
-          padding: "20px",
-          overflowY: "auto",
-          transition: "top 0.3s ease",
-          zIndex: 50,
-        }}
-        className="sticky-progress"
-      >
+      {open && (
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "90%",
+            maxWidth: "360px",
+            maxHeight: "70vh",
+            background: "#0f0d23",
+            border: "0.5px solid rgba(255,255,255,0.1)",
+            borderRadius: "16px",
+            padding: "20px",
+            overflowY: "auto",
+            zIndex: 50,
           }}
+          className="sticky-progress"
         >
-          <p style={{ fontSize: "13px", color: "#9ca4ab", fontWeight: "500" }}>
-            Your progress
-          </p>
-          <button
-            onClick={() => setOpen(false)}
+          <div
             style={{
-              color: "rgba(255,255,255,0.5)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "18px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "20px",
             }}
           >
-            ✕
-          </button>
-        </div>
+            <p
+              style={{ fontSize: "13px", color: "#9ca4ab", fontWeight: "500" }}
+            >
+              Your progress
+            </p>
+            <button
+              onClick={() => setOpen(false)}
+              style={{
+                color: "rgba(255,255,255,0.5)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                fontSize: "18px",
+              }}
+            >
+              ✕
+            </button>
+          </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {nominations.map((cat) => {
-            const seenInCat = cat.nominees.filter((n) =>
-              seen.some((k) => k.startsWith(`${n.tmdb_id}-`)),
-            ).length;
-            const total = cat.nominees.length;
-            const percentage = (seenInCat / total) * 100;
-            const isComplete = seenInCat === total;
-
-            return (
-              <div
-                key={cat.category}
-                onClick={() => {
-                  document
-                    .getElementById(
-                      cat.category.replace(/\s+/g, "-").toLowerCase(),
-                    )
-                    ?.scrollIntoView({ behavior: "smooth" });
-                  setOpen(false);
-                }}
-                style={{ cursor: "pointer" }}
-              >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
+            {nominations.map((cat) => {
+              const seenInCat = cat.nominees.filter((n) =>
+                seen.some((k) => k.startsWith(`${n.tmdb_id}-`)),
+              ).length;
+              const total = cat.nominees.length;
+              const percentage = (seenInCat / total) * 100;
+              const isComplete = seenInCat === total;
+              return (
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom: "4px",
+                  key={cat.category}
+                  onClick={() => {
+                    document
+                      .getElementById(
+                        cat.category.replace(/\s+/g, "-").toLowerCase(),
+                      )
+                      ?.scrollIntoView({ behavior: "smooth" });
+                    setOpen(false);
                   }}
-                >
-                  <span style={{ fontSize: "13px", color: "white" }}>
-                    {cat.category}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "500",
-                      color: "white",
-                    }}
-                  >
-                    {seenInCat}/{total}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    height: "4px",
-                    background: "rgba(255,255,255,0.1)",
-                    borderRadius: "2px",
-                  }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     style={{
-                      width: `${percentage}%`,
-                      height: "100%",
-                      background: isComplete ? "#22c55e" : "#AB8BFF",
-                      borderRadius: "2px",
-                      transition: "width 0.3s ease",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "4px",
                     }}
-                  />
+                  >
+                    <span style={{ fontSize: "11px", color: "white" }}>
+                      {cat.category}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: "500",
+                        color: "white",
+                      }}
+                    >
+                      {seenInCat}/{total}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      height: "3px",
+                      background: "rgba(255,255,255,0.1)",
+                      borderRadius: "2px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: `${percentage}%`,
+                        height: "100%",
+                        background: isComplete ? "#22c55e" : "#AB8BFF",
+                        borderRadius: "2px",
+                        transition: "width 0.3s ease",
+                      }}
+                    />
+                  </div>
                 </div>
+              );
+            })}
+            <div
+              style={{
+                marginTop: "1rem",
+                paddingTop: "1rem",
+                borderTop: "0.5px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "white",
+                  }}
+                >
+                  Total seen
+                </span>
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "white",
+                  }}
+                >
+                  {seenCount}/{totalCount}
+                </span>
               </div>
-            );
-          })}
-
-          <div
-            style={{
-              marginTop: "1rem",
-              paddingTop: "1rem",
-              borderTop: "0.5px solid rgba(255,255,255,0.1)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span
-                style={{ fontSize: "14px", fontWeight: "600", color: "white" }}
-              >
-                Total seen
-              </span>
-              <span
-                style={{ fontSize: "14px", fontWeight: "600", color: "white" }}
-              >
-                {seenCount}/{totalCount}
-              </span>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Sticky button */}
       {visible && (
         <div
           onClick={() => setOpen(!open)}

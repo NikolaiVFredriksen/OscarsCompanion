@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import Spinner from "./components/Spinner";
-import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
 import { loginWithGoogle, logout, getCurrentUser } from "./lib/supabase";
 import Nominations from "./components/Nominations";

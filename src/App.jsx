@@ -46,6 +46,16 @@ const App = () => {
     JSON.parse(localStorage.getItem("watchlist") || "[]"),
   );
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sidebarOpen && window.scrollY > 2000) {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sidebarOpen]);
+
   const toggleWatchlist = async (tmdbId) => {
     const hasAny = watchlist.some((k) => k.startsWith(`${tmdbId}-`));
     if (hasAny) {

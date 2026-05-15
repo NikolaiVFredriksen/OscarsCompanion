@@ -236,8 +236,9 @@
 
 .sidebar-wrapper {
   @apply block;
-  position: sticky;
+  position: relative;
   top: 2rem;
+  padding-bottom: 5rem;
   height: fit-content;
 }
 

@@ -28,4 +28,11 @@ describe("toggleSeen", () => {
     expect(result).toContain("456-");
     expect(result).not.toContain("123-");
   });
+
+  it("does not add duplicate entries", () => {
+    const seen = ["123-"];
+    const result = toggleSeen(seen, 123);
+    const resultAgain = toggleSeen(result, 123);
+    expect(resultAgain.filter((k) => k.startsWith("123-")).length).toBe(1);
+  });
 });

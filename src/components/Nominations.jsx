@@ -224,7 +224,7 @@ const Nominations = ({
             style={{
               background: "#0f0d23",
               borderRadius: "16px",
-              maxWidth: "640px",
+              maxWidth: "720px",
               width: "100%",
               maxHeight: "90vh",
               overflowY: "auto",
@@ -250,72 +250,112 @@ const Nominations = ({
                 }
                 alt={selectedNominee.title}
                 style={{
-                  width: "160px",
-                  minWidth: "160px",
-                  height: "240px",
+                  width: "200px",
+                  minWidth: "200px",
+                  height: "300px",
                   objectFit: "cover",
                   borderRadius: "8px",
                 }}
               />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: "8px",
-                  }}
-                >
-                  <h3
+              <div
+                style={{
+                  flex: 1,
+                  minWidth: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "300px",
+                }}
+              >
+                {/* Topp-innhold */}
+                <div>
+                  <div
                     style={{
-                      color: "white",
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      margin: 0,
-                    }}
-                  >
-                    {selectedNominee.title}
-                  </h3>
-                  <button
-                    onClick={() => setSelectedNominee(null)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      color: "rgba(255,255,255,0.5)",
-                      cursor: "pointer",
-                      fontSize: "18px",
-                      flexShrink: 0,
-                    }}
-                  >
-                    ✕
-                  </button>
-                </div>
-
-                {selectedNominee.person && (
-                  <p
-                    style={{
-                      fontSize: "13px",
-                      color: "#AB8BFF",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
                       marginBottom: "8px",
                     }}
                   >
-                    {selectedNominee.person}
-                  </p>
-                )}
+                    <h3
+                      style={{
+                        color: "white",
+                        fontSize: "16px",
+                        fontWeight: "700",
+                        margin: 0,
+                      }}
+                    >
+                      {selectedNominee.title}
+                    </h3>
+                    <button
+                      onClick={() => setSelectedNominee(null)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "rgba(255,255,255,0.5)",
+                        cursor: "pointer",
+                        fontSize: "18px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ✕
+                    </button>
+                  </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "6px",
-                    marginBottom: "12px",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {movieData[selectedNominee.tmdb_id]?.genres
-                    ?.slice(0, 2)
-                    .map((g) => (
+                  {selectedNominee.person && (
+                    <p
+                      style={{
+                        fontSize: "13px",
+                        color: "#AB8BFF",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {selectedNominee.person}
+                    </p>
+                  )}
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "6px",
+                      marginBottom: "12px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {movieData[selectedNominee.tmdb_id]?.genres
+                      ?.slice(0, 2)
+                      .map((g) => (
+                        <span
+                          key={g.id}
+                          style={{
+                            fontSize: "11px",
+                            padding: "3px 8px",
+                            borderRadius: "20px",
+                            background: "rgba(255,255,255,0.08)",
+                            color: "rgba(255,255,255,0.6)",
+                          }}
+                        >
+                          {g.name}
+                        </span>
+                      ))}
+                    {movieData[selectedNominee.tmdb_id]?.vote_average && (
                       <span
-                        key={g.id}
+                        style={{
+                          fontSize: "11px",
+                          padding: "3px 8px",
+                          borderRadius: "20px",
+                          background: "rgba(171,139,255,0.15)",
+                          color: "#AB8BFF",
+                        }}
+                      >
+                        ⭐{" "}
+                        {movieData[
+                          selectedNominee.tmdb_id
+                        ].vote_average.toFixed(1)}
+                      </span>
+                    )}
+                    {movieData[selectedNominee.tmdb_id]?.release_date && (
+                      <span
                         style={{
                           fontSize: "11px",
                           padding: "3px 8px",
@@ -324,60 +364,35 @@ const Nominations = ({
                           color: "rgba(255,255,255,0.6)",
                         }}
                       >
-                        {g.name}
+                        {
+                          movieData[selectedNominee.tmdb_id].release_date.split(
+                            "-",
+                          )[0]
+                        }
                       </span>
-                    ))}
-                  {movieData[selectedNominee.tmdb_id]?.vote_average && (
-                    <span
+                    )}
+                  </div>
+
+                  {movieData[selectedNominee.tmdb_id]?.overview && (
+                    <p
                       style={{
-                        fontSize: "11px",
-                        padding: "3px 8px",
-                        borderRadius: "20px",
-                        background: "rgba(171,139,255,0.15)",
-                        color: "#AB8BFF",
-                      }}
-                    >
-                      ⭐{" "}
-                      {movieData[selectedNominee.tmdb_id].vote_average.toFixed(
-                        1,
-                      )}
-                    </span>
-                  )}
-                  {movieData[selectedNominee.tmdb_id]?.release_date && (
-                    <span
-                      style={{
-                        fontSize: "11px",
-                        padding: "3px 8px",
-                        borderRadius: "20px",
-                        background: "rgba(255,255,255,0.08)",
+                        fontSize: "12px",
                         color: "rgba(255,255,255,0.6)",
+                        lineHeight: "1.6",
                       }}
                     >
-                      {
-                        movieData[selectedNominee.tmdb_id].release_date.split(
-                          "-",
-                        )[0]
-                      }
-                    </span>
+                      {movieData[selectedNominee.tmdb_id].overview}
+                    </p>
                   )}
                 </div>
 
-                {movieData[selectedNominee.tmdb_id]?.overview && (
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      color: "rgba(255,255,255,0.6)",
-                      lineHeight: "1.6",
-                      marginBottom: "16px",
-                    }}
-                  >
-                    {movieData[selectedNominee.tmdb_id].overview}
-                  </p>
-                )}
-
+                {/* Knapper nederst */}
                 <div style={{ display: "flex", gap: "8px" }}>
                   <button
-                    onClick={() => toggleSeen(selectedNominee.tmdb_id)}
+                    onClick={() => {
+                      toggleSeen(selectedNominee.tmdb_id);
+                      setSelectedNominee(null);
+                    }}
                     className={
                       seen.some((k) =>
                         k.startsWith(`${selectedNominee.tmdb_id}-`),
@@ -404,7 +419,10 @@ const Nominations = ({
                       : "Mark as seen"}
                   </button>
                   <button
-                    onClick={() => toggleWatchlist(selectedNominee.tmdb_id)}
+                    onClick={() => {
+                      toggleWatchlist(selectedNominee.tmdb_id);
+                      setSelectedNominee(null);
+                    }}
                     className={
                       watchlist.some((k) =>
                         k.startsWith(`${selectedNominee.tmdb_id}-`),

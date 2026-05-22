@@ -252,7 +252,7 @@ const App = () => {
 
         <div
           style={{
-            padding: "48px 20px",
+            padding: "100px 20px",
             textAlign: "center",
             position: "relative",
             background:
@@ -301,7 +301,7 @@ const App = () => {
             display: "flex",
             justifyContent: "center",
             gap: "12px",
-            marginTop: "24px",
+            marginTop: "0px",
           }}
         >
           <div

@@ -20,6 +20,7 @@ const Nominations = ({
 }) => {
   const [movieData, setMovieData] = useState({});
   const [personData, setPersonData] = useState({});
+  const [selectedNominee, setSelectedNominee] = useState(null);
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -127,7 +128,11 @@ const Nominations = ({
 
                 return (
                   <li key={index}>
-                    <div className="movie-card">
+                    <div
+                      className="movie-card"
+                      onClick={() => setSelectedNominee(nominee)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <img
                         src={
                           nominee.person_id &&
@@ -166,7 +171,10 @@ const Nominations = ({
                         </div>
                         <div className="card-actions mb-5">
                           <button
-                            onClick={() => toggleSeen(nominee.tmdb_id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleSeen(nominee.tmdb_id);
+                            }}
                             className={isSeen ? "active" : ""}
                           >
                             👁{" "}
@@ -178,7 +186,10 @@ const Nominations = ({
                             </span>
                           </button>
                           <button
-                            onClick={() => toggleWatchlist(nominee.tmdb_id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleWatchlist(nominee.tmdb_id);
+                            }}
                             className={isWatchlisted ? "active" : ""}
                           >
                             🔖 {isWatchlisted ? "Added" : "Watchlist"}
@@ -193,6 +204,238 @@ const Nominations = ({
           </div>
         );
       })}
+
+      {selectedNominee && (
+        <div
+          onClick={() => setSelectedNominee(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.7)",
+            zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "#0f0d23",
+              borderRadius: "16px",
+              maxWidth: "640px",
+              width: "100%",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              border: "0.5px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            <div
+              style={{
+                padding: "20px",
+                display: "flex",
+                gap: "16px",
+                alignItems: "flex-start",
+              }}
+            >
+              <img
+                src={
+                  selectedNominee.person_id &&
+                  personData[selectedNominee.person_id]?.profile_path
+                    ? `https://image.tmdb.org/t/p/w500/${personData[selectedNominee.person_id].profile_path}`
+                    : movieData[selectedNominee.tmdb_id]?.poster_path
+                      ? `https://image.tmdb.org/t/p/w500/${movieData[selectedNominee.tmdb_id].poster_path}`
+                      : `/no-movie.png`
+                }
+                alt={selectedNominee.title}
+                style={{
+                  width: "160px",
+                  minWidth: "160px",
+                  height: "240px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <h3
+                    style={{
+                      color: "white",
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      margin: 0,
+                    }}
+                  >
+                    {selectedNominee.title}
+                  </h3>
+                  <button
+                    onClick={() => setSelectedNominee(null)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "rgba(255,255,255,0.5)",
+                      cursor: "pointer",
+                      fontSize: "18px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {selectedNominee.person && (
+                  <p
+                    style={{
+                      fontSize: "13px",
+                      color: "#AB8BFF",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {selectedNominee.person}
+                  </p>
+                )}
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "6px",
+                    marginBottom: "12px",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {movieData[selectedNominee.tmdb_id]?.genres
+                    ?.slice(0, 2)
+                    .map((g) => (
+                      <span
+                        key={g.id}
+                        style={{
+                          fontSize: "11px",
+                          padding: "3px 8px",
+                          borderRadius: "20px",
+                          background: "rgba(255,255,255,0.08)",
+                          color: "rgba(255,255,255,0.6)",
+                        }}
+                      >
+                        {g.name}
+                      </span>
+                    ))}
+                  {movieData[selectedNominee.tmdb_id]?.vote_average && (
+                    <span
+                      style={{
+                        fontSize: "11px",
+                        padding: "3px 8px",
+                        borderRadius: "20px",
+                        background: "rgba(171,139,255,0.15)",
+                        color: "#AB8BFF",
+                      }}
+                    >
+                      ⭐{" "}
+                      {movieData[selectedNominee.tmdb_id].vote_average.toFixed(
+                        1,
+                      )}
+                    </span>
+                  )}
+                  {movieData[selectedNominee.tmdb_id]?.release_date && (
+                    <span
+                      style={{
+                        fontSize: "11px",
+                        padding: "3px 8px",
+                        borderRadius: "20px",
+                        background: "rgba(255,255,255,0.08)",
+                        color: "rgba(255,255,255,0.6)",
+                      }}
+                    >
+                      {
+                        movieData[selectedNominee.tmdb_id].release_date.split(
+                          "-",
+                        )[0]
+                      }
+                    </span>
+                  )}
+                </div>
+
+                {movieData[selectedNominee.tmdb_id]?.overview && (
+                  <p
+                    style={{
+                      fontSize: "12px",
+                      color: "rgba(255,255,255,0.6)",
+                      lineHeight: "1.6",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {movieData[selectedNominee.tmdb_id].overview}
+                  </p>
+                )}
+
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <button
+                    onClick={() => toggleSeen(selectedNominee.tmdb_id)}
+                    className={
+                      seen.some((k) =>
+                        k.startsWith(`${selectedNominee.tmdb_id}-`),
+                      )
+                        ? "active"
+                        : ""
+                    }
+                    style={{
+                      flex: 1,
+                      color: "white",
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      padding: "8px",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    👁{" "}
+                    {seen.some((k) =>
+                      k.startsWith(`${selectedNominee.tmdb_id}-`),
+                    )
+                      ? "Seen"
+                      : "Mark as seen"}
+                  </button>
+                  <button
+                    onClick={() => toggleWatchlist(selectedNominee.tmdb_id)}
+                    className={
+                      watchlist.some((k) =>
+                        k.startsWith(`${selectedNominee.tmdb_id}-`),
+                      )
+                        ? "active"
+                        : ""
+                    }
+                    style={{
+                      flex: 1,
+                      color: "white",
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      padding: "8px",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    🔖{" "}
+                    {watchlist.some((k) =>
+                      k.startsWith(`${selectedNominee.tmdb_id}-`),
+                    )
+                      ? "Added"
+                      : "Watchlist"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -188,6 +188,16 @@
     }
   }
 
+  .nominations > div {
+    scroll-margin-top: 55px;
+  }
+
+  @media (max-width: 768px) {
+    .nominations > div {
+      scroll-margin-top: 100px;
+    }
+  }
+
   @media (max-width: 640px) {
     .nominations ul {
       grid-template-columns: 1fr;

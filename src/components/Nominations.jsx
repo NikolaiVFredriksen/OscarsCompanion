@@ -108,7 +108,6 @@ const Nominations = ({
           <div
             key={cat.category}
             id={cat.category.replace(/\s+/g, "-").toLowerCase()}
-            style={{ scrollMarginTop: "100px" }}
           >
             <h2 className={`${index === 0 ? "mt-15" : "mt-20"} mb-2`}>
               {cat.category}
